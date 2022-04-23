@@ -80,8 +80,6 @@ router.post('/login', (req, res, next) => {
                 })
             }
             if (bRes) {
-                console.log(result);
-                console.log(process.env.SECRET_JWT_KEY);
                 const token = jwt.sign({
                     username: result[0].username,
                     userId: result[0].id

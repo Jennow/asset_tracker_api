@@ -1,8 +1,6 @@
-const jwt = require('jsonwebtoken');
-
 module.exports = {
-    validateRegister: (req, res, next) => {
-        if (!req.body.username || req.body.username < 3) {
+     validateRegister: async (req, res, next) => {
+        if (!req.body.username || req.body.username.length < 3) {
             return res.status(400).send({
                 message: 'Please enter a username with min. 3 chars',
             });
@@ -21,13 +19,13 @@ module.exports = {
         }
 
         if (!req.body.currencyid) {
-            return req.status(400).send({
+            return res.status(400).send({
                 message: 'Please select currency'
             });
         }
 
         if (!req.body.email) {
-            return req.status(400).send({
+            return res.status(400).send({
                 message: 'Please enter a valid email adress'
             });
         }
