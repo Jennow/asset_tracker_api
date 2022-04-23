@@ -1,4 +1,4 @@
-const userMiddleware = require('../users');
+const userMiddleware = require('../users.middleware');
 
 const mockResponse = () => {
     const res = {};
@@ -14,7 +14,7 @@ const mockRequest = (body) => {
     };
 };
 
-describe('user registration', () => {
+describe('user validateRegister test', () => {
 
     test('valid input', () => {
         const mockedNext = jest.fn();
