@@ -23,7 +23,7 @@ describe('load dasboard test', () => {
         const mockedRes = mockResponse();
         const dashboardController = getDashboardController({});
 
-        return await dashboardController.register(mockedReq, mockedRes, mockedNext).then(data => {
+        return await dashboardController.load(mockedReq, mockedRes, mockedNext).then(data => {
             expect(mockedRes.status).toHaveBeenCalledWith(201);
         });
     })
