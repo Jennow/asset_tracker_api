@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
+
 module.exports = {
      validateRegister: async (req, res, next) => {
         if (!req.body.username || req.body.username.length < 3) {
@@ -31,5 +34,20 @@ module.exports = {
         }
         next();
     },
-    isLoggedIn: () => {}
+    isLoggedIn: (req, res, next) => {
+
+        try {
+            if (!req.headers.authorization) {
+                throw {};
+            }
+            const token = req.headers.authorization.split(' ')[1];
+            const decoded = jwt.verify(token, process.env.SECRET_JWT_KEY);
+            req.userData = decoded;
+            next();
+        } catch (err) {
+            return res.status(400).send({
+                message: 'Your session is not valid'
+            })
+        }
+     }
 }
