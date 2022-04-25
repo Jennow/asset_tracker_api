@@ -1,5 +1,7 @@
 name: CI Angular app through Github Actions
 on: push
+env:
+  SECRET_JWT_KEY: test_jwt_key
 jobs:
   build:
     runs-on: ubuntu-latest
