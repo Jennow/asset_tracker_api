@@ -78,6 +78,7 @@ module.exports = (repository) => {
                 })
             )
             .catch(error =>  {
+                console.log(error);
                 const status = error.status ? error.status : 500;
                 return res.status(status).send({
                     message: error.message ? error.message : error
