@@ -54,7 +54,6 @@ module.exports = (repository) => {
                 return bcrypt.compare(req.body.password, user.password)
             })
             .then(match => {
-                console.log(match);
                 if (match) {
                     token = jwt.sign({
                         username: user.username,
@@ -62,7 +61,6 @@ module.exports = (repository) => {
                     }, process.env.SECRET_JWT_KEY, {
                         expiresIn: '1d'
                     });
-                    console.log(token);
                     return;
                 }
                 throw {
@@ -78,7 +76,6 @@ module.exports = (repository) => {
                 })
             )
             .catch(error =>  {
-                console.log(error);
                 const status = error.status ? error.status : 500;
                 return res.status(status).send({
                     message: error.message ? error.message : error
