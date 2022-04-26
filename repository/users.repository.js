@@ -22,6 +22,14 @@ const UsersRepository = {
     },
     async updateUserLogin(id) {
         return await db.query(`UPDATE users SET last_login = now() WHERE id = '${id}'`);
+    },
+    async getCurrency(userId) {
+        return {
+            short: '$',
+            id: 1,
+            identifier: 'usd'
+        };
+        return await db.query(`SELECT c.* FROM users u INNER JOIN currencies c ON c.id = u.currenciesid WHERE u.id = '${userId}`);  
     }
 }
 

@@ -4,11 +4,12 @@ const db = require('../db.js');
 
 const usersMiddleware = require('../middleware/users.middleware.js');
 const UsersRepository = require('../repository/users.repository.js');
+const AssetsRepository = require('../repository/assets.repository.js');
 const getUsersController = require('../controller/users.controller.js');
 const getDashboardController = require('../controller/dashboard.controller.js');
 
 const usersController = getUsersController(UsersRepository)
-const dashboardController = getDashboardController({});
+const dashboardController = getDashboardController(AssetsRepository, UsersRepository);
 
 router.post('/sign-up', usersMiddleware.validateRegister, async (req, res, next) => { 
     usersController.register(req, res, next)
