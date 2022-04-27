@@ -51,6 +51,7 @@ module.exports = (repository) => {
                 return result[0];
             }).then(foundUser => {
                 user = foundUser;
+                user.currency = repository.getCurrency(user.id);
                 return bcrypt.compare(req.body.password, user.password)
             })
             .then(match => {

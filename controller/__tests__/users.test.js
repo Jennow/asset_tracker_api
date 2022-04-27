@@ -83,9 +83,15 @@ describe('user login test', () => {
         }]);
         updateUserLogin = jest.fn()
 
+        getCurrency = jest.fn(async(userId) => [{
+            "id": 1,
+            "name":"test currency"
+        }]);
+
         const usersController = getUsersController({
             findUserByUsername,
             updateUserLogin,
+            getCurrency
         });
 
         const mockedReq = mockRequest({
@@ -109,10 +115,12 @@ describe('user login test', () => {
             "currencyid": 1
         }]);
         updateUserLogin = jest.fn()
+        getCurrency = jest.fn(async(userId) => []);
 
         const usersController = getUsersController({
             findUserByUsername,
             updateUserLogin,
+            getCurrency
         });
 
         const mockedReq = mockRequest({

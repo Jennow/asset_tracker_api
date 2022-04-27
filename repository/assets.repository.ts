@@ -2,7 +2,7 @@ const Database = require('../db.js');
 const db = new Database();
 
 const AssetsRepository = {
-    async getAssets(userId:string) {
+    async getAssets(userId) {
         return [
             {
                 "id": 1,

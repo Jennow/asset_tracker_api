@@ -4,7 +4,7 @@ const db = require('../db.js');
 
 const usersMiddleware = require('../middleware/users.middleware.js');
 const UsersRepository = require('../repository/users.repository.js');
-const AssetsRepository = require('../repository/assets.repository.js');
+const AssetsRepository = require('../repository/assets.repository.ts');
 const getUsersController = require('../controller/users.controller.js');
 const getDashboardController = require('../controller/dashboard.controller.js');
 
