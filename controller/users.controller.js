@@ -11,7 +11,7 @@ module.exports = (repository) => {
         register: async function(req, res, next) {
             await repository.findUserIdByUsername(req.body.username)
             .then((result) => {
-                if (result.length) {
+                if (result.id) {
                     throw {
                         status: 409,
                         message: 'This username is already in use!'
@@ -41,17 +41,12 @@ module.exports = (repository) => {
         },
         login: async function(req, res, next) {
             await repository.findUserByUsername(req.body.username)
-            .then((result) => {
-                if (!result.length) {
-                    throw {
-                        status: 400,
-                        message: 'Username or password incorrect!',
-                    };
+            .then(foundUser => {
+
+                if (!foundUser) {
+                    return foundUser;
                 }
-                return result[0];
-            }).then(foundUser => {
-                user = foundUser;
-                user.currency = repository.getCurrency(user.id);
+                user = foundUser;                
                 return bcrypt.compare(req.body.password, user.password)
             })
             .then(match => {

@@ -40,7 +40,7 @@ module.exports = {
             if (!req.headers.authorization) {
                 throw {};
             }
-            const token = req.headers.authorization.split(' ')[1];
+            const token = req.headers.authorization.split(' ')[1].split('"').join('');
             const decoded = jwt.verify(token, process.env.SECRET_JWT_KEY);
             req.userData = decoded;
             next();

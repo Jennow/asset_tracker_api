@@ -7,14 +7,24 @@ const mockResponse = () => {
     res.json = jest.fn().mockReturnValue(res);
     return res;
 };
+var mockUser;
+var mockRequest;
+var mockedRegisterReq;
 
-const mockRequest = (body) => {
-    return {
-        body: body
+beforeAll(async() => {
+    mockUser = {
+        "id": "65695525-d9d8-4d62-a986-d9cf688c108b",
+    }  
+    mockRequest = (body) => {
+        return {
+            body: body,
+            userData: mockUser
+        };
     };
-};
+    mockedRegisterReq = mockRequest();
 
-const mockedRegisterReq = mockRequest();
+});
+
 const mockedNext = jest.fn();
 
 describe('load dasboard test', () => {
@@ -22,16 +32,28 @@ describe('load dasboard test', () => {
         getAssets = jest.fn(async() => [{
             "id": 1,
             "name":"test asset name", 
+        }]);        
+        getUserAssetHistory = jest.fn(async() => [{
+            "id": 1,
+            "name":"test userasset name", 
+        }]);        
+        getTransactions = jest.fn(async() => [{
+            "id": 1,
+            "name":"test transaction name", 
         }]);
         getCurrency = jest.fn(async() => [{
             "id": 1,
             "name":"test currency"
         }]);
+        getOverview = jest.fn(async() => [{
+            "id": 1,
+            "name":"test overview"
+        }]);
 
         const mockedReq = mockRequest();
         const mockedRes = mockResponse();
-        const dashboardController = getDashboardController({getAssets}, {getCurrency});
-
+        const dashboardController = getDashboardController({getAssets}, {getUserAssetHistory, getOverview}, {getTransactions});
+        
         return await dashboardController.load(mockedReq, mockedRes, mockedNext).then(data => {
             expect(mockedRes.status).toHaveBeenCalledWith(201);
         });

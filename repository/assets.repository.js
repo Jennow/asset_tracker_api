@@ -95,6 +95,9 @@ const AssetsRepository = {
                                INNER JOIN assethistories ah ON ah.assetid = a.id
                                WHERE a.userId = '${userId}')`);
     },
+    async getAssetHistory(assetId) {
+        
+    }
 }
 
 module.exports = AssetsRepository;

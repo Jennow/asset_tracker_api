@@ -6,7 +6,17 @@ const UsersRepository = {
         return await db.query(`SELECT id FROM users WHERE LOWER(username) = LOWER('${username}')`);
     },
     async findUserByUsername(username) {
-        return await db.query(`SELECT * FROM users WHERE LOWER(username) = LOWER('${username}')`);
+        const users =  await db.query(`SELECT * FROM users WHERE LOWER(username) = LOWER('${username}')`);
+        
+        if (!users || users.length === 0) {
+            throw {
+                status: 400,
+                message: 'Username or password incorrect!',
+            };
+        }
+        let user = users[0];
+        user.currency = await this.getCurrency(user.id);
+        return user;
     },
     async createUser(id, username, email, password, currencyid) {
         return await db.query(`

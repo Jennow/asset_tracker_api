@@ -25,6 +25,24 @@ const mockedRegisterReq = mockRequest({
 
 const mockedNext = jest.fn();
 
+var mockUser;
+beforeAll(async() => {
+    mockUser = {
+        "id": "65695525-d9d8-4d62-a986-d9cf688c108b",
+        "username": "testuser",
+        "email": "test@test.test",
+        "password": await bcrypt.hash("123456", 10),
+        "currencyid": 1,
+        "registered": "2022-04-22T21:10:01.000Z",
+        "last_login": "2022-04-30T15:05:21.000Z",
+        "currency": {
+            "short": "$",
+            "id": 1,
+            "identifier": "usd"
+        }
+    }  
+});
+
 describe('user register test', () => {
     test('successful registration', async() => {
         findUserIdByUsername = jest.fn(async() => []);
@@ -50,7 +68,8 @@ describe('user register test', () => {
     })
 
     test('duplicate registration',async() => {
-        findUserIdByUsername = jest.fn(async() => ['entry']);
+        findUserIdByUsername = jest.fn(async() => mockUser);
+
         createUser = jest.fn()
         const mockedRes = mockResponse();
 
@@ -75,12 +94,7 @@ describe('user register test', () => {
 
 describe('user login test', () => {
     test('successful login', async() => {
-        findUserByUsername = jest.fn(async() => [{
-            "username": "testuser",
-            "email":"test@test.com", 
-            "password": await bcrypt.hash("123456", 10),
-            "currencyid": 1
-        }]);
+        findUserByUsername = jest.fn(async() => mockUser);
         updateUserLogin = jest.fn()
 
         getCurrency = jest.fn(async(userId) => [{
@@ -108,12 +122,7 @@ describe('user login test', () => {
     })
 
     test('wrong password login', async() => {
-        findUserByUsername = jest.fn(async() => [{
-            "username": "testuser",
-            "email":"test@test.com", 
-            "password": await bcrypt.hash("123456", 10),
-            "currencyid": 1
-        }]);
+        findUserByUsername = jest.fn(async() => mockUser);
         updateUserLogin = jest.fn()
         getCurrency = jest.fn(async(userId) => []);
 
@@ -144,7 +153,7 @@ describe('user login test', () => {
     })
 
     test('user not found login', async() => {
-        findUserByUsername = jest.fn(async() => []);
+        findUserByUsername = jest.fn(async() => {});
         updateUserLogin = jest.fn()
 
         const usersController = getUsersController({
