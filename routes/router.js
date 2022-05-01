@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const usersMiddleware = require('../middleware/users.middleware.js');
+const assetsMiddleware = require('../middleware/assets.middleware.js');
+
 const UsersRepository = require('../repository/users.repository.js');
 const AssetsRepository = require('../repository/assets.repository.js');
 const getUsersController = require('../controller/users.controller.js');
@@ -20,7 +22,6 @@ const notificationsController = getNotificationsController(NotificationRepositor
 const assetsController = getAssetsController(AssetsRepository);
 const transactionsController = getTransactionsController(TransactionsRepository);
 
-
 router.post('/sign-up', usersMiddleware.validateRegister, async (req, res, next) => { 
     usersController.register(req, res, next)
 });
@@ -28,6 +29,7 @@ router.post('/login', usersController.login);
 router.get('/dashboard', usersMiddleware.isLoggedIn, dashboardController.load);
 router.get('/notifications', usersMiddleware.isLoggedIn, notificationsController.load);
 router.get('/assets', usersMiddleware.isLoggedIn, assetsController.load);
+router.post('/assets', usersMiddleware.isLoggedIn, assetsMiddleware.validateAsset, assetsController.add);
 router.post('/transactions', usersMiddleware.isLoggedIn, transactionsController.add);
 
 module.exports = router;

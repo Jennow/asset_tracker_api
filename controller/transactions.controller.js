@@ -1,13 +1,14 @@
 module.exports = (transactionsRepository) => {
     const TransactionsController = {
         add: async function(req, res, next) {
-            // Add transaction to database
-            respponse = {
+            const asset = req.body;
+            const response = await transactionsRepository.addTransaction(asset);
+            return res.status(201).send({
                 success: true,
-                transactionid: 99
-            }
-            return res.status(201).json(respponse);
-        }
+                id: response.insertId
+            });
+            
+        },
     }
 
     return TransactionsController;

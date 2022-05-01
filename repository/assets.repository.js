@@ -2,6 +2,17 @@ const Database = require('../db.js');
 const db = new Database();
 
 const AssetsRepository = {
+    async addAsset(asset) {
+        return await db.query(`
+        INSERT INTO assets (identifier, name, type, icon, subtype) 
+        VALUES (
+            '${asset.identifier}',
+            '${asset.name}',
+            '${asset.type}',
+            '${asset.icon}',
+            '${asset.subtype}'
+        )`);
+    },
     async getAssets(userId) {
         return [
             {
@@ -91,8 +102,7 @@ const AssetsRepository = {
                 ]
             }
         ];
-        return await db.query(`SELECT a.*, ah.* FROM assets a
-                               INNER JOIN assethistories ah ON ah.assetid = a.id
+        return await db.query(`SELECT a.* FROM assets a
                                WHERE a.userId = '${userId}')`);
     },
     async getAssetHistory(assetId) {

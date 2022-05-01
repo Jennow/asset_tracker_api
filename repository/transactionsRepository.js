@@ -2,7 +2,26 @@ const Database = require('../db.js');
 const db = new Database();
 
 const TransactionsRepository = {
-    async getTransactions(userId) {
+    async addTransaction(transaction) {
+        return await db.query(`
+        INSERT INTO transactions (userassetid, createdate, amount, status) 
+        VALUES (
+            ${transaction.userassetid},
+            now(),
+            ${transaction.amount},
+            ${transaction.status},
+        )`);
+    },
+    async getTransactions(id) {
+        let transaction = await db.query(`SELECT * FROM transactions WHERE id = '${id}`)[0];
+        
+        if (transaction) {
+            transaction.asset = await db.query(`SELECT a.id, a.identifier, a.name FROM transactions t
+            INNER JOIN userassets ua ON ua.id = t.userassetid
+            INNER JOIN assets a ON a.id = ua.assetid
+            WHERE t.id = ${id}`)[0];
+        }
+        return transaction;
         return [
             {
                 "id": 1,
