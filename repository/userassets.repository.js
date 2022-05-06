@@ -2,7 +2,24 @@ const Database = require('../db.js');
 const db = new Database();
 
 const UserassetsRepository = {
-    async getOverview(userId) {
+    async addUserasset(userasset, userid) {
+        return await db.query(`
+        INSERT INTO userassets (assetid, userid, amount, highlighted, sum, plattform) 
+        VALUES (
+            '${userasset.assetid}',
+            ${userid},
+            '${userasset.amount}',
+            '${userasset.highlighted}',
+            '${userasset.sum}',
+            '${userasset.plattform}'
+        )`);
+    },
+    async getUserassets(userId) {
+        return await db.query(`SELECT ua.*, a.name, a.identifier, a.type, a.icon, a.subtype FROM userassets ua
+                               LEFT JOIN assets a ON ua.assetid = a.id
+                               WHERE ua.userid = '${userId}'`); 
+    },
+    async getSummary(userId) {
         return [];
     },
     async getUserAssetHistory(userId) {

@@ -1,4 +1,4 @@
-const getAssetsController = require('../assets.controller.js');
+const getUserAssetsController = require('../userassets.controller.js');
 
 const mockResponse = () => {
     const res = {};
@@ -33,19 +33,18 @@ describe('post asset test', () => {
             success: true,
             id: 99
         };
-        addAsset = jest.fn(async() => {
+        addUserasset = jest.fn(async() => {
             return {
                 insertId: 99 
             }});
 
         const mockedReq = mockRequest();
         const mockedRes = mockResponse();
-        const assetsController = getAssetsController({addAsset});
+        const userAssetsController = getUserAssetsController({addUserasset});
         
-        return await assetsController.add(mockedReq, mockedRes, mockedNext).then(data => {
+        return await userAssetsController.add(mockedReq, mockedRes, mockedNext).then(data => {
 
             expect(mockedRes.status).toHaveBeenCalledWith(201);
-
             expect(mockedRes.status().send).toHaveBeenCalledWith(expectedMessage);            
         });
     })

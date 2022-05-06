@@ -7,7 +7,7 @@ const UsersRepository = {
     },
     async findUserByUsername(username) {
         const users =  await db.query(`SELECT * FROM users WHERE LOWER(username) = LOWER('${username}')`);
-        
+        console.log(users);
         if (!users || users.length === 0) {
             throw {
                 status: 400,
@@ -18,11 +18,10 @@ const UsersRepository = {
         user.currency = await this.getCurrency(user.id);
         return user;
     },
-    async createUser(id, username, email, password, currencyid) {
+    async createUser(username, email, password, currencyid) {
         return await db.query(`
-        INSERT INTO users (id, username, email, password, currencyid, registered) 
+        INSERT INTO users (username, email, password, currencyid, registered) 
         VALUES (
-            '${id}', 
             ${db.escape(username)}, 
             ${db.escape(email)}, 
             '${password}', 

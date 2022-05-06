@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS users  (
     email VARCHAR(200),
     status Integer,
     password VARCHAR(200),
-    currencyyid INTEGER NOT NULL,
+    currencyid INTEGER NOT NULL,
     registered TIMESTAMP,
     last_login TIMESTAMP
 );

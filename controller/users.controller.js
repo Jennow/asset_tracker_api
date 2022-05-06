@@ -21,7 +21,6 @@ module.exports = (repository) => {
             })
             .then(() => bcrypt.hash(req.body.password, 10))
             .then(hash =>  repository.createUser(
-                    uuid.v4(),
                     req.body.username, 
                     req.body.email, 
                     hash, 
@@ -53,7 +52,7 @@ module.exports = (repository) => {
                 if (match) {
                     token = jwt.sign({
                         username: user.username,
-                        userId: user.id
+                        id: user.id
                     }, process.env.SECRET_JWT_KEY, {
                         expiresIn: '1d'
                     });

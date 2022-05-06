@@ -29,7 +29,7 @@ const mockedNext = jest.fn();
 
 describe('load dasboard test', () => {
     test('successful full load', async() => {
-        getAssets = jest.fn(async() => [{
+        getUserassets = jest.fn(async() => [{
             "id": 1,
             "name":"test asset name", 
         }]);        
@@ -45,14 +45,14 @@ describe('load dasboard test', () => {
             "id": 1,
             "name":"test currency"
         }]);
-        getOverview = jest.fn(async() => [{
+        getSummary = jest.fn(async() => [{
             "id": 1,
             "name":"test overview"
         }]);
 
         const mockedReq = mockRequest();
         const mockedRes = mockResponse();
-        const dashboardController = getDashboardController({getAssets}, {getUserAssetHistory, getOverview}, {getTransactions});
+        const dashboardController = getDashboardController({getUserassets, getUserAssetHistory, getSummary}, {getTransactions});
         
         return await dashboardController.load(mockedReq, mockedRes, mockedNext).then(data => {
             expect(mockedRes.status).toHaveBeenCalledWith(201);

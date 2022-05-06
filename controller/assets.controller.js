@@ -10,6 +10,7 @@ module.exports = (assetsRepository) => {
             });
         },
         load: async function(req, res, next) {
+            console.log(req.userData);
             const assets = await assetsRepository.getAssets();
             return res.status(201).send(assets);
         }
