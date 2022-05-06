@@ -18,9 +18,8 @@ const getAssetsController = require('../controller/assets.controller');
 const getUserassetsController = require('../controller/userassets.controller');
 const getTransactionsController = require('../controller/transactions.controller');
 
-
 const usersController = getUsersController(UsersRepository)
-const dashboardController = getDashboardController(AssetsRepository, UserassetsRepository, TransactionsRepository);
+const dashboardController = getDashboardController(UserassetsRepository, TransactionsRepository);
 const notificationsController = getNotificationsController(NotificationRepository);
 const assetsController = getAssetsController(AssetsRepository);
 const userassetsContoller = getUserassetsController(UserassetsRepository);
