@@ -7,7 +7,6 @@ module.exports = (userassetsRepository, transactionsRepository) => {
             const transactions = await transactionsRepository.getTransactions(userId);
             const overview = await userassetsRepository.getSummary(userId);
             
-            console.log(transactions);
             return res.status(201).json({
                 userAssets: userAssets,
                 personalizedHistories: history,
